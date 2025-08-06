@@ -21,7 +21,7 @@
         { pkgs }:
         {
           default = pkgs.mkShell {
-            # The Nix packages provided in the environment.
+            # The Nix packages installed in the dev environment.
             packages = with pkgs; [
               azure-cli # azure cli
               opentofu # infrastructure as code
@@ -29,7 +29,15 @@
               git-cliff # generate changelog
               trivy # find vulnerabilities and misconfigurations
               just # just a command runner
+              husky # manage git hooks
             ];
+            # The shell script executed when the environment is activated.
+            shellHook = ''
+              # install git hook managed by husky
+              if [ ! -e "./.husky/_" ]; then
+                husky install
+              fi
+            '';
           };
         }
       );
