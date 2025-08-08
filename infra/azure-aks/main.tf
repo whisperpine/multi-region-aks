@@ -40,7 +40,7 @@ resource "azurerm_kubernetes_cluster" "default" {
     # Note: "system nodes" aren't "master nodes" in kubernetes (which is relevant to "worker nodes").
     # "system nodes" and "user nodes" in AKS are both "worker nodes" in the concept of kubernetes.
     # "system nodes" are responsible for k8s services like CoreDNS, and can also be used to deploy custom services.
-    # The default k8s node label of "system nodes" is "kubernetes.azure.com/mode: system".
+    # The default k8s node label of "system nodes" is "kubernetes.azure.com/mode=system".
     # The "master nodes" of a kubernetes cluster is managed by AKS which are invisible.
   }
 
