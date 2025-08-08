@@ -28,3 +28,15 @@ resource "azurerm_resource_group" "default" {
   location = each.value
   name     = "${module.naming.resource_group.name}-${each.value}"
 }
+
+# Azure Virtual Network (vnet) and subnet.
+module "azure_vnet" {
+  # Create multiple instances of this module.
+  for_each            = { for o in var.location_cidr_list : o.location => o.cidr }
+  source              = "./azure-vnet"
+  resource_group_name = azurerm_resource_group.default[each.key].name
+  vnet_location       = each.key
+  address_space       = each.value
+  vnet_name           = "${module.naming.virtual_network.name}-${each.key}"
+  security_group_name = "${module.naming.network_security_group.name}-${each.key}"
+}

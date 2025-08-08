@@ -15,3 +15,8 @@ output "resource_group_name_prefix" {
 output "resource_group_name" {
   value = [for o in azurerm_resource_group.default : o.name]
 }
+
+#### module.azure_vnet ####
+output "vnet_name" {
+  value = [for o in module.azure_vnet : o.vnet_name]
+}
