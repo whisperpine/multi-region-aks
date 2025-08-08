@@ -25,6 +25,10 @@ locals {
   # Then add an IP range that includes that IP (e.g. "123.123.123.123/32").
   # To allow access from all IP addresses, use this: "0.0.0.0/0" (don't do this in production).
   aks_authorized_ip_ranges = toset([data.sops_file.default.data["aks_authorized_ip_range"]]) # set(string)
+  # module: azure-cosmosdb
+  main_location              = var.location_cidr_list[0].location                        # string
+  cosmosdb_free_tier_enabled = data.sops_file.default.data["cosmosdb_free_tier_enabled"] # bool
+  cosmosdb_throughput_limit  = data.sops_file.default.data["cosmosdb_throughput_limit"]  # number
 }
 
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group
@@ -57,4 +61,16 @@ module "azure_aks" {
   subnet_id            = module.azure_vnet[each.value].subnet_id
   ask_location         = each.value
   authorized_ip_ranges = local.aks_authorized_ip_ranges
+}
+
+# Multi-region-write Azure CosmosDB for MongoDB.
+module "azure_cosmosdb" {
+  source              = "./azure-cosmosdb"
+  resource_group_name = azurerm_resource_group.default[local.main_location].name
+  cosmosdb_location   = local.main_location
+  cosmosdb_name       = module.naming.cosmosdb_account.name
+  subnet_id_list      = [for o in module.azure_vnet : o.subnet_id]
+  location_list       = tolist(local.location_set)
+  free_tier_enabled   = local.cosmosdb_free_tier_enabled
+  throughput_limit    = local.cosmosdb_throughput_limit
 }

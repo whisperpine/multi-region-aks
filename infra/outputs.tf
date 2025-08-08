@@ -28,3 +28,8 @@ output "vnet_name" {
 output "kubernetes_cluster_name" {
   value = [for o in module.azure_aks : o.kubernetes_cluster_name]
 }
+
+#### module.azure_cosmosdb ####
+output "cosmosdb_account_name" {
+  value = module.azure_cosmosdb.cosmosdb_account_name
+}
