@@ -1,0 +1,30 @@
+# https://registry.terraform.io/modules/Azure/naming/azurerm/latest
+module "naming" {
+  source  = "Azure/naming/azurerm"
+  version = "~> 0.4.2"
+  suffix  = var.naming_suffix
+}
+
+# https://registry.terraform.io/providers/carlpett/sops/latest/docs/data-sources/file
+data "sops_file" "default" {
+  source_file = "encrypted.${terraform.workspace}.json"
+}
+
+locals {
+  # provider: hashicorp/azurerm
+  # repository      = "multi-region-aks"
+  client_id       = data.sops_file.default.data["client_id"]       # string
+  client_secret   = data.sops_file.default.data["client_secret"]   # string
+  tenant_id       = data.sops_file.default.data["tenant_id"]       # string
+  subscription_id = data.sops_file.default.data["subscription_id"] # string
+  # "for_each" can only be assigned with a map or set.
+  location_set = toset([for o in var.location_cidr_list : o.location]) # set(string)
+}
+
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group
+resource "azurerm_resource_group" "default" {
+  # Create multiple instances of this module.
+  for_each = local.location_set
+  location = each.value
+  name     = "${module.naming.resource_group.name}-${each.value}"
+}
