@@ -1,0 +1,9 @@
+# ------------------------------------------------
+# trivy config
+# ------------------------------------------------
+
+# MEDIUM: Cluster does not have logging enabled via OMS Agent.
+# Ensure AKS logging to Azure Monitoring is configured for containers to
+# monitor the performance of workloads.
+# See https://avd.aquasec.com/misconfig/avd-azu-0040
+AVD-AZU-0040

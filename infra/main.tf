@@ -19,6 +19,12 @@ locals {
   subscription_id = data.sops_file.default.data["subscription_id"] # string
   # "for_each" can only be assigned with a map or set.
   location_set = toset([for o in var.location_cidr_list : o.location]) # set(string)
+  # module: azure-aks
+  # Find the public IP of your local device by visiting: https://ifconfig.me
+  # or run the following command: `curl ifconfig.me`. 
+  # Then add an IP range that includes that IP (e.g. "123.123.123.123/32").
+  # To allow access from all IP addresses, use this: "0.0.0.0/0" (don't do this in production).
+  aks_authorized_ip_ranges = toset([data.sops_file.default.data["aks_authorized_ip_range"]]) # set(string)
 }
 
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group
@@ -39,4 +45,16 @@ module "azure_vnet" {
   address_space       = each.value
   vnet_name           = "${module.naming.virtual_network.name}-${each.key}"
   security_group_name = "${module.naming.network_security_group.name}-${each.key}"
+}
+
+# Multi-region Azure Kubernetes Service (AKS).
+module "azure_aks" {
+  # Create multiple instances of this module.
+  for_each             = local.location_set
+  source               = "./azure-aks"
+  resource_group_name  = azurerm_resource_group.default[each.value].name
+  ask_name             = "${module.naming.kubernetes_cluster.name}-${each.value}"
+  subnet_id            = module.azure_vnet[each.value].subnet_id
+  ask_location         = each.value
+  authorized_ip_ranges = local.aks_authorized_ip_ranges
 }

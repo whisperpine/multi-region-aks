@@ -10,6 +10,9 @@ output "main_location" {
 output "resource_group_name_prefix" {
   value = module.naming.resource_group.name
 }
+output "kubernetes_cluster_name_prefix" {
+  value = module.naming.kubernetes_cluster.name
+}
 
 #### module.root ####
 output "resource_group_name" {
@@ -19,4 +22,9 @@ output "resource_group_name" {
 #### module.azure_vnet ####
 output "vnet_name" {
   value = [for o in module.azure_vnet : o.vnet_name]
+}
+
+#### module.azure_aks ####
+output "kubernetes_cluster_name" {
+  value = [for o in module.azure_aks : o.kubernetes_cluster_name]
 }
