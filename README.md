@@ -59,3 +59,7 @@ we chose Azure CosmosDB with MongoDB API compatibility, for two key reasons:
 
 The result: low latency, high availability, burst handling, cost efficiency, and
 unified data across regions.
+
+## Infrastructure as Code
+
+Refer to [./infra/README.md](./infra/README.md) and [./infra/azure-aks/README.md](./infra/azure-aks/README.md).
