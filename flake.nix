@@ -26,6 +26,7 @@
               azure-cli # azure cli
               opentofu # infrastructure as code
               typos # check misspelling
+              cocogitto # conventional commit toolkit
               git-cliff # generate changelog
               trivy # find vulnerabilities and misconfigurations
               just # just a command runner
