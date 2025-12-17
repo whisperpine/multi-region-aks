@@ -25,6 +25,7 @@
             packages = with pkgs; [
               azure-cli # azure cli
               opentofu # infrastructure as code
+              sops # simple tool for managing secrets
               typos # check misspelling
               cocogitto # conventional commit toolkit
               git-cliff # generate changelog
