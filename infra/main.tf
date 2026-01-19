@@ -20,7 +20,7 @@ locals {
   location_set = toset([for o in var.location_cidr_list : o.location])
   # Module: azure-aks.
   # Find the public IP of your local device by visiting: https://ifconfig.me
-  # or run the following command: `curl ifconfig.me`. 
+  # or run the following command: `curl ifconfig.me`.
   # Then add an IP range that includes that IP (e.g. "123.123.123.123/32").
   # To allow access from all IP addresses, use this: "0.0.0.0/0" (don't do this in production).
   aks_authorized_ip_ranges = toset([data.sops_file.default.data["aks_authorized_ip_range"]])
@@ -32,34 +32,34 @@ locals {
 
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group
 resource "azurerm_resource_group" "default" {
-  # Create multiple instances of this module.
-  for_each = local.location_set
   location = each.value
   name     = "${module.naming.resource_group.name}-${each.value}"
+  # Create multiple instances of this module.
+  for_each = local.location_set
 }
 
 # Azure Virtual Network (vnet) and subnet.
 module "azure_vnet" {
-  # Create multiple instances of this module.
-  for_each            = { for o in var.location_cidr_list : o.location => o.cidr }
   source              = "./azure-vnet"
   resource_group_name = azurerm_resource_group.default[each.key].name
   vnet_location       = each.key
   address_space       = each.value
   vnet_name           = "${module.naming.virtual_network.name}-${each.key}"
   security_group_name = "${module.naming.network_security_group.name}-${each.key}"
+  # Create multiple instances of this module.
+  for_each = { for o in var.location_cidr_list : o.location => o.cidr }
 }
 
 # Multi-region Azure Kubernetes Service (AKS).
 module "azure_aks" {
-  # Create multiple instances of this module.
-  for_each             = local.location_set
   source               = "./azure-aks"
   resource_group_name  = azurerm_resource_group.default[each.value].name
   aks_name             = "${module.naming.kubernetes_cluster.name}-${each.value}"
   subnet_id            = module.azure_vnet[each.value].subnet_id
   aks_location         = each.value
   authorized_ip_ranges = local.aks_authorized_ip_ranges
+  # Create multiple instances of this module.
+  for_each = local.location_set
 }
 
 # Multi-region-write Azure CosmosDB for MongoDB.

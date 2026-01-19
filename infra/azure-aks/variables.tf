@@ -1,19 +1,24 @@
 variable "aks_name" {
-  type = string
+  description = "name of the AKS instance"
+  type        = string
 }
 
 variable "aks_location" {
-  type = string
+  description = "datacenter location of the AKS instance"
+  type        = string
 }
 
 variable "resource_group_name" {
-  type = string
+  description = "name of the corresponding resource group"
+  type        = string
 }
 
 variable "subnet_id" {
-  type = string
+  description = "id of the subnet containing all AKS nodes"
+  type        = string
 }
 
 variable "authorized_ip_ranges" {
-  type = set(string)
+  description = "the authorized ip ranges from which developers can administrate"
+  type        = set(string)
 }

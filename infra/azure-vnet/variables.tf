@@ -1,19 +1,24 @@
 variable "vnet_name" {
-  type = string
+  description = "the name of the vnet"
+  type        = string
 }
 
 variable "address_space" {
-  type = list(string)
+  description = "a list CDIR address space"
+  type        = list(string)
 }
 
 variable "vnet_location" {
-  type = string
+  description = "the datacenter location in which the vnet located"
+  type        = string
 }
 
 variable "resource_group_name" {
-  type = string
+  description = "name of the resource group"
+  type        = string
 }
 
 variable "security_group_name" {
-  type = string
+  description = "name of the default security group"
+  type        = string
 }

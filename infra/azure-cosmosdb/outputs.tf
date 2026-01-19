@@ -1,3 +1,4 @@
 output "cosmosdb_account_name" {
-  value = azurerm_cosmosdb_account.db.name
+  description = "the account name of CosmosDB"
+  value       = azurerm_cosmosdb_account.db.name
 }

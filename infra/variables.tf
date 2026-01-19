@@ -1,10 +1,11 @@
 variable "naming_suffix" {
-  description = "Resources naming suffix used by naming module"
+  description = "resources naming suffix used by naming module"
   type        = list(string)
   default     = ["mra"]
 }
 
 variable "location_cidr_list" {
+  description = "list of locations and corresponding cidr ranges"
   type = list(object({
     location = string,
     cidr     = list(string)
