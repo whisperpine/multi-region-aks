@@ -21,4 +21,11 @@ variable "subnet_id" {
 variable "authorized_ip_ranges" {
   description = "the authorized ip ranges from which developers can administrate"
   type        = set(string)
+  validation {
+    condition = alltrue([
+      for o in var.authorized_ip_ranges :
+      can(cidrhost(o, 0))
+    ])
+    error_message = "invalid CIDR was found"
+  }
 }

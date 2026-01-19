@@ -19,4 +19,18 @@ variable "location_cidr_list" {
     # { location = "westeurope", cidr = ["10.255.224.0/20"] },
     # { location = "eastus2", cidr = ["10.255.208.0/20"] },
   ]
+  validation {
+    condition = alltrue(flatten([
+      for item in var.location_cidr_list :
+      [for o in item.cidr : can(cidrhost(o, 0))]
+    ]))
+    error_message = "invalid CIDR was found"
+  }
+  validation {
+    condition = alltrue([
+      for o in var.location_cidr_list :
+      can(regex("^[a-z0-9]+$", o.location))
+    ])
+    error_message = "location must only be composed of lowercase letters and numbers"
+  }
 }
