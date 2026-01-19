@@ -1,6 +1,6 @@
-# ------------------------------------------------
+# ------------ #
 # trivy config
-# ------------------------------------------------
+# ------------ #
 
 # MEDIUM: Cluster does not have logging enabled via OMS Agent.
 # Ensure AKS logging to Azure Monitoring is configured for containers to
