@@ -56,9 +56,9 @@ module "azure_aks" {
   for_each             = local.location_set
   source               = "./azure-aks"
   resource_group_name  = azurerm_resource_group.default[each.value].name
-  ask_name             = "${module.naming.kubernetes_cluster.name}-${each.value}"
+  aks_name             = "${module.naming.kubernetes_cluster.name}-${each.value}"
   subnet_id            = module.azure_vnet[each.value].subnet_id
-  ask_location         = each.value
+  aks_location         = each.value
   authorized_ip_ranges = local.aks_authorized_ip_ranges
 }
 

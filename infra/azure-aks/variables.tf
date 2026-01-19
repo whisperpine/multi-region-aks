@@ -1,8 +1,8 @@
-variable "ask_name" {
+variable "aks_name" {
   type = string
 }
 
-variable "ask_location" {
+variable "aks_location" {
   type = string
 }
 

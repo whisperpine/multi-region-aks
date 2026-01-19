@@ -8,16 +8,16 @@ terraform {
   }
 }
 
-# ASK (Azure Kubernetes Service) docs: 
+# AKS (Azure Kubernetes Service) docs:
 # https://learn.microsoft.com/en-us/azure/aks/
 # Example projects on GitHub:
 # https://github.com/hashicorp/terraform-provider-azurerm/tree/main/examples/kubernetes
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster
 resource "azurerm_kubernetes_cluster" "default" {
-  name                = var.ask_name
-  location            = var.ask_location
+  name                = var.aks_name
+  location            = var.aks_location
   resource_group_name = var.resource_group_name
-  dns_prefix          = var.ask_name
+  dns_prefix          = var.aks_name
   sku_tier            = "Free"
 
   kubernetes_version = "1.33.2"
