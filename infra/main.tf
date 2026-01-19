@@ -11,24 +11,23 @@ data "sops_file" "default" {
 }
 
 locals {
-  # provider: hashicorp/azurerm
-  # repository      = "multi-region-aks"
-  client_id       = data.sops_file.default.data["client_id"]       # string
-  client_secret   = data.sops_file.default.data["client_secret"]   # string
-  tenant_id       = data.sops_file.default.data["tenant_id"]       # string
-  subscription_id = data.sops_file.default.data["subscription_id"] # string
+  # Provider: hashicorp/azurerm.
+  client_id       = data.sops_file.default.data["client_id"]
+  client_secret   = data.sops_file.default.data["client_secret"]
+  tenant_id       = data.sops_file.default.data["tenant_id"]
+  subscription_id = data.sops_file.default.data["subscription_id"]
   # "for_each" can only be assigned with a map or set.
-  location_set = toset([for o in var.location_cidr_list : o.location]) # set(string)
-  # module: azure-aks
+  location_set = toset([for o in var.location_cidr_list : o.location])
+  # Module: azure-aks.
   # Find the public IP of your local device by visiting: https://ifconfig.me
   # or run the following command: `curl ifconfig.me`. 
   # Then add an IP range that includes that IP (e.g. "123.123.123.123/32").
   # To allow access from all IP addresses, use this: "0.0.0.0/0" (don't do this in production).
-  aks_authorized_ip_ranges = toset([data.sops_file.default.data["aks_authorized_ip_range"]]) # set(string)
-  # module: azure-cosmosdb
-  main_location              = var.location_cidr_list[0].location                        # string
-  cosmosdb_free_tier_enabled = data.sops_file.default.data["cosmosdb_free_tier_enabled"] # bool
-  cosmosdb_throughput_limit  = data.sops_file.default.data["cosmosdb_throughput_limit"]  # number
+  aks_authorized_ip_ranges = toset([data.sops_file.default.data["aks_authorized_ip_range"]])
+  # Module: azure-cosmosdb.
+  main_location              = var.location_cidr_list[0].location
+  cosmosdb_free_tier_enabled = data.sops_file.default.data["cosmosdb_free_tier_enabled"]
+  cosmosdb_throughput_limit  = data.sops_file.default.data["cosmosdb_throughput_limit"]
 }
 
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group

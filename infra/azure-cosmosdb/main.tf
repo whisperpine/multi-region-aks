@@ -17,12 +17,12 @@ resource "azurerm_cosmosdb_account" "db" {
   offer_type          = "Standard"
   free_tier_enabled   = var.free_tier_enabled
 
-  mongo_server_version             = "7.0" # Options: "7.0", "6.0", "5.0", "4.2".
-  automatic_failover_enabled       = true  # Refer to failover_priority below.
-  multiple_write_locations_enabled = true  # It reduces write latency.
+  mongo_server_version             = "7.0" # options: "7.0", "6.0", "5.0", "4.2"
+  automatic_failover_enabled       = true  # refer to failover_priority below
+  multiple_write_locations_enabled = true  # it reduces write latency
   # It must be true if virtual_network_rule is used.
   # It can be false if private_end_point is used instead.
-  public_network_access_enabled = true # Allow public access (for azure portal visualization).
+  public_network_access_enabled = true # allow public access (for azure portal visualization)
 
   # A set of IP address ranges in CIDR form to be included as the allowed list
   # of client IPs. We probably want to use IPs from Azure Portal:
@@ -48,8 +48,8 @@ resource "azurerm_cosmosdb_account" "db" {
 
   backup {
     # If enable_multiple_write_locations is true, "Continuous" cannot be used.
-    type                = "Periodic" # Options: "Periodic" or "Continuous"
-    storage_redundancy  = "Geo"      # Option: "Geo", "Local", "Zone"
+    type                = "Periodic" # options: "Periodic" or "Continuous"
+    storage_redundancy  = "Geo"      # option: "Geo", "Local", "Zone"
     interval_in_minutes = 480
     retention_in_hours  = 16
 
@@ -59,7 +59,7 @@ resource "azurerm_cosmosdb_account" "db" {
 
   # https://learn.microsoft.com/en-us/azure/cosmos-db/consistency-levels
   consistency_policy {
-    # Options: Strong, BoundedStaleness, Session, ConsistentPrefix, Eventual
+    # Options: Strong, BoundedStaleness, Session, ConsistentPrefix, Eventual.
     consistency_level = "Eventual"
     # If set to "BoundedStaleness", the following two lines must also be configured:
     # max_interval_in_seconds = 300

@@ -49,8 +49,8 @@ resource "azurerm_kubernetes_cluster" "default" {
   }
 
   network_profile {
-    network_plugin = "kubenet" # Options: azure, kubenet, none
-    network_policy = "calico"  # Options: calico, azure, cilium
+    network_plugin = "kubenet" # options: azure, kubenet, none
+    network_policy = "calico"  # options: calico, azure, cilium
   }
 
   api_server_access_profile {
@@ -76,7 +76,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "regular" {
   min_count            = 0
   auto_scaling_enabled = true
 
-  os_disk_type    = "Managed" # Options: "Managed" or "Ephemeral"
+  os_disk_type    = "Managed" # options: "Managed" or "Ephemeral"
   os_disk_size_gb = 32
 
   upgrade_settings {
@@ -99,7 +99,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "spot" {
   min_count            = 0
   auto_scaling_enabled = true
 
-  priority        = "Spot" # Options: "Regular", "Spot"
+  priority        = "Spot" # options: "Regular", "Spot"
   eviction_policy = "Delete"
   os_disk_type    = "Managed"
   os_disk_size_gb = 32
