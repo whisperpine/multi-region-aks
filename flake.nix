@@ -31,7 +31,7 @@
               git-cliff # generate changelog
               trivy # find vulnerabilities and misconfigurations
               just # just a command runner
-              husky # manage git hooks
+              prek # better pre-commit
             ];
             # The shell script executed when the environment is activated.
             shellHook = /* sh */ ''
@@ -39,10 +39,8 @@
               git log -1 --format="%cd" --date=format:"%Y-%m-%d" -- flake.lock |
                 awk '{printf "\"flake.lock\" last modified on: %s", $1}' &&
                 echo " ($((($(date +%s) - $(git log -1 --format="%ct" -- flake.lock)) / 86400)) days ago)"
-              # Install git hooks managed by husky.
-              if [ ! -e "./.husky/_" ]; then
-                husky install
-              fi
+              # Install git hooks managed by prek.
+              prek install --quiet
             '';
           };
         }
