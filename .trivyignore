@@ -7,3 +7,10 @@
 # monitor the performance of workloads.
 # See https://avd.aquasec.com/misconfig/avd-azu-0040
 AVD-AZU-0040
+
+# MEDIUM: Cluster does not have private cluster enabled.
+# A public AKS API server endpoint increases exposure to unauthorized access or
+# attack. Enable private cluster to ensure the API server endpoint is only
+# accessible from within the virtual network.
+# See https://avd.aquasec.com/misconfig/azu-0065
+AZU-0065
