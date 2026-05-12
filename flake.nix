@@ -32,6 +32,7 @@
               trivy # find vulnerabilities and misconfigurations
               just # just a command runner
               prek # better pre-commit
+              rumdl # markdown linter
             ];
             # The shell script executed when the environment is activated.
             shellHook = /* sh */ ''
