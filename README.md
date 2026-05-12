@@ -1,4 +1,4 @@
-# Multi-region AKS
+# Multi-Region AKS
 
 [![GitHub License](https://img.shields.io/github/license/whisperpine/multi-region-aks)](https://github.com/whisperpine/multi-region-aks/blob/main/LICENSE)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/whisperpine/multi-region-aks/checks.yml?logo=github&label=checks)](https://github.com/whisperpine/multi-region-aks/actions/workflows/checks.yml)
