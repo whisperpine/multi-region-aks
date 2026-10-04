@@ -3,7 +3,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 4.81.0"
+      version = "~> 5.8.0"
     }
   }
 }
@@ -25,6 +25,10 @@ resource "azurerm_kubernetes_cluster" "default" {
   automatic_upgrade_channel = "patch"
 
   role_based_access_control_enabled = true
+
+  node_provisioning_profile {
+    mode = "Auto"
+  }
 
   # System node pool.
   default_node_pool {
