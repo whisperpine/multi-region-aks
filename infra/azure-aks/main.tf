@@ -26,6 +26,10 @@ resource "azurerm_kubernetes_cluster" "default" {
 
   role_based_access_control_enabled = true
 
+  node_provisioning_profile {
+    mode = "Auto"
+  }
+
   # System node pool.
   default_node_pool {
     name            = "default"

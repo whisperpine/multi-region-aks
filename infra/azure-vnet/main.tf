@@ -26,7 +26,9 @@ resource "azurerm_subnet" "default" {
   # cause I decide to split only one subnet in the vnet.
   address_prefixes = var.address_space
   # Service_endpoints is required before binding subnet to a resource.
-  service_endpoints = ["Microsoft.AzureCosmosDB"]
+  service_endpoint {
+    service = "Microsoft.AzureCosmosDB"
+  }
   # It has to be "Disabled" if private endpoint will be added to the subnet.
   private_endpoint_network_policies             = "Disabled"
   private_link_service_network_policies_enabled = false
