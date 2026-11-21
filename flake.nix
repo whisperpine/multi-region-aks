@@ -30,6 +30,7 @@
               git-cliff # generate changelog
               trivy # find vulnerabilities and misconfigurations
               just # just a command runner
+              zizmor # lint github actions
               prek # better pre-commit
               rumdl # markdown linter
             ];
